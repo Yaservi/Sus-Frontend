@@ -73,7 +73,7 @@ export default function MessagesPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <header className="flex flex-col sm:flex-row justify-between items-center mb-8 pb-4 border-b">
-        <Link href="/" className="text-3xl font-bold text-blue-600 mb-4 sm:mb-0">
+        <Link href="/" className="text-3xl font-bold text-[#3A8DFF] mb-4 sm:mb-0">
           Sus! Anonymous Messaging
         </Link>
 
@@ -89,7 +89,7 @@ export default function MessagesPage() {
             {!wsConnected && !reconnecting && (
               <button
                 onClick={reconnect}
-                className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                className="px-2 py-1 text-xs bg-[#3A8DFF] text-white rounded hover:bg-[#2A7DEF] transition-colors"
                 title="Try to reconnect to the notification service"
               >
                 Reconnect
@@ -109,9 +109,14 @@ export default function MessagesPage() {
       <main className="flex flex-col gap-8">
         <section>
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">My Messages</h1>
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[#3A8DFF] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <h1 className="text-2xl font-bold">Messages</h1>
+            </div>
             {unreadCount > 0 && (
-              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+              <span className="bg-[#EBF4FF] text-[#3A8DFF] px-3 py-1 rounded-full text-sm font-medium">
                 {unreadCount} unread
               </span>
             )}
@@ -150,7 +155,7 @@ export default function MessagesPage() {
                         });
                     }
                   }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
                 >
                   Retry
                 </button>

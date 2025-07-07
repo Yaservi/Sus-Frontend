@@ -14,6 +14,7 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [failedMessageIds, setFailedMessageIds] = useState<number[]>([]);
+  const [expandedMessageIds, setExpandedMessageIds] = useState<number[]>([]);
 
   // Format date to a more readable format
   const formatDate = (dateString: string) => {
@@ -80,7 +81,7 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
                   setError(err instanceof Error ? err.message : 'Failed to mark messages as read');
                 });
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
           >
             Retry Marking as Read
           </button>
@@ -105,28 +106,61 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
     return <div className="text-center py-4">No messages yet.</div>;
   }
 
+  // Toggle message expansion
+  const toggleMessageExpansion = (messageId: number) => {
+    setExpandedMessageIds(prevIds => 
+      prevIds.includes(messageId)
+        ? prevIds.filter(id => id !== messageId)
+        : [...prevIds, messageId]
+    );
+  };
+
   return (
     <div className="space-y-4">
-      {messages.map((message) => (
-        <div 
-          key={message.id} 
-          className={`p-4 rounded-lg ${
-            message.is_read ? 'bg-gray-100' : 'bg-blue-50 border-l-4 border-blue-500'
-          }`}
-        >
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-sm text-gray-500">
-              {formatDate(message.created_at)}
-            </span>
-            {!message.is_read && (
-              <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
-                New
+      {messages.map((message) => {
+        const isExpanded = expandedMessageIds.includes(message.id);
+        const messageContent = message.content;
+        const previewContent = messageContent.length > 100 
+          ? `${messageContent.substring(0, 100)}...` 
+          : messageContent;
+
+        return (
+          <div 
+            key={message.id} 
+            className={`p-4 rounded-lg cursor-pointer transition-all ${
+              message.is_read 
+                ? 'bg-gray-100 hover:bg-gray-200' 
+                : 'bg-[#EBF4FF] border-l-4 border-[#3A8DFF] hover:bg-[#DCE9FF]'
+            }`}
+            onClick={() => toggleMessageExpansion(message.id)}
+          >
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-sm text-gray-500">
+                {formatDate(message.created_at)}
               </span>
-            )}
+              <div className="flex items-center">
+                {!message.is_read && (
+                  <span className="inline-block px-2 py-1 text-xs bg-[#EBF4FF] text-[#3A8DFF] rounded-full mr-2">
+                    New
+                  </span>
+                )}
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className={`h-5 w-5 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+            <div className="text-gray-800">
+              {isExpanded ? messageContent : previewContent}
+            </div>
           </div>
-          <p className="text-gray-800">{message.content}</p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -235,7 +269,7 @@ export function MessageListContainer() {
                   });
               }
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
           >
             Retry
           </button>
