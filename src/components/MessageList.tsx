@@ -81,7 +81,7 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
                   setError(err instanceof Error ? err.message : 'Failed to mark messages as read');
                 });
             }}
-            className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
+            className="btn-primary px-4 py-2 rounded-md"
           >
             Retry Marking as Read
           </button>
@@ -130,7 +130,7 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
             className={`p-4 rounded-lg cursor-pointer transition-all ${
               message.is_read 
                 ? 'bg-gray-100 hover:bg-gray-200' 
-                : 'bg-[#EBF4FF] border-l-4 border-[#3A8DFF] hover:bg-[#DCE9FF]'
+                : 'bg-secondary border-l-4 border-primary hover:bg-[#f8d0e0]'
             }`}
             onClick={() => toggleMessageExpansion(message.id)}
           >
@@ -140,7 +140,7 @@ export default function MessageList({ messages = [], onMarkAsRead }: MessageList
               </span>
               <div className="flex items-center">
                 {!message.is_read && (
-                  <span className="inline-block px-2 py-1 text-xs bg-[#EBF4FF] text-[#3A8DFF] rounded-full mr-2">
+                  <span className="inline-block px-2 py-1 text-xs bg-secondary text-primary rounded-full mr-2">
                     New
                   </span>
                 )}
@@ -269,7 +269,7 @@ export function MessageListContainer() {
                   });
               }
             }}
-            className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
+            className="btn-primary px-4 py-2 rounded-md"
           >
             Retry
           </button>

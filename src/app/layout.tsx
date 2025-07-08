@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../context/AuthContext";
 import { WebSocketProvider } from "../context/WebSocketContext";
+import Navbar from "../components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +28,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <AuthProvider>
           <WebSocketProvider>
-            {children}
+            <header>
+              <Navbar />
+            </header>
+            <main className="flex-grow">
+              {children}
+            </main>
+            <footer className="py-6 text-center text-gray-500 text-sm border-t">
+              <div className="container mx-auto px-4">
+                <p>© {new Date().getFullYear()} Sus! Anonymous Messaging. All rights reserved.</p>
+              </div>
+            </footer>
           </WebSocketProvider>
         </AuthProvider>
       </body>
