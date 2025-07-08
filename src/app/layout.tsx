@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sus! Anonymous Messaging",
   description: "Send and receive anonymous messages",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -40,7 +43,6 @@ export default function RootLayout({
             </main>
             <footer className="py-6 text-center text-gray-500 text-sm border-t">
               <div className="container mx-auto px-4">
-                <p>© {new Date().getFullYear()} Sus! Anonymous Messaging. All rights reserved.</p>
               </div>
             </footer>
           </WebSocketProvider>

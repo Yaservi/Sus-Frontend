@@ -22,7 +22,7 @@ interface AuthFormProps {
 
 export default function AuthForm({ type, onSubmit, loading }: AuthFormProps) {
   const [error, setError] = useState<string | null>(null);
-  
+
   const {
     register,
     handleSubmit,
@@ -45,13 +45,13 @@ export default function AuthForm({ type, onSubmit, loading }: AuthFormProps) {
       <h2 className="text-2xl font-bold mb-6 text-center">
         {type === 'login' ? 'Login' : 'Register'}
       </h2>
-      
+
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
           {error}
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit(processSubmit)} className="space-y-4">
         <div>
           <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
@@ -61,14 +61,14 @@ export default function AuthForm({ type, onSubmit, loading }: AuthFormProps) {
             id="username"
             type="text"
             {...register('username')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             disabled={loading}
           />
           {errors.username && (
             <p className="mt-1 text-sm text-red-600">{errors.username.message}</p>
           )}
         </div>
-        
+
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password
@@ -77,18 +77,18 @@ export default function AuthForm({ type, onSubmit, loading }: AuthFormProps) {
             id="password"
             type="password"
             {...register('password')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             disabled={loading}
           />
           {errors.password && (
             <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
           )}
         </div>
-        
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          className="w-full py-2 px-4 btn-primary font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
         >
           {loading ? 'Processing...' : type === 'login' ? 'Login' : 'Register'}
         </button>
