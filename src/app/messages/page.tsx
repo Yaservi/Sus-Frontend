@@ -72,51 +72,17 @@ export default function MessagesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-8 pb-4 border-b">
-        <Link href="/" className="text-3xl font-bold text-[#3A8DFF] mb-4 sm:mb-0">
-          Sus! Anonymous Messaging
-        </Link>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className={`w-3 h-3 rounded-full mr-2 ${wsConnected ? 'bg-green-500' : 'bg-red-500'}`}></span>
-              <span className="text-sm text-gray-600">
-                {wsConnected ? 'Connected' : 'Disconnected'}
-                {!wsConnected && reconnecting && ' (Reconnecting...)'}
-              </span>
-            </div>
-            {!wsConnected && !reconnecting && (
-              <button
-                onClick={reconnect}
-                className="px-2 py-1 text-xs bg-[#3A8DFF] text-white rounded hover:bg-[#2A7DEF] transition-colors"
-                title="Try to reconnect to the notification service"
-              >
-                Reconnect
-              </button>
-            )}
-          </div>
-
-          <button
-            onClick={logout}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
-      </header>
-
       <main className="flex flex-col gap-8">
         <section>
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[#3A8DFF] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               <h1 className="text-2xl font-bold">Messages</h1>
             </div>
             {unreadCount > 0 && (
-              <span className="bg-[#EBF4FF] text-[#3A8DFF] px-3 py-1 rounded-full text-sm font-medium">
+              <span className="bg-secondary text-primary px-3 py-1 rounded-full text-sm font-medium">
                 {unreadCount} unread
               </span>
             )}
@@ -155,7 +121,7 @@ export default function MessagesPage() {
                         });
                     }
                   }}
-                  className="px-4 py-2 bg-[#3A8DFF] text-white rounded-md hover:bg-[#2A7DEF] transition-colors"
+                  className="btn-primary px-4 py-2 rounded-md"
                 >
                   Retry
                 </button>
@@ -166,7 +132,7 @@ export default function MessagesPage() {
                       // which will use cached data if available
                       setError(null);
                     }}
-                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors border border-primary"
                   >
                     Show Cached Messages
                   </button>
@@ -178,10 +144,6 @@ export default function MessagesPage() {
           )}
         </section>
       </main>
-
-      <footer className="mt-12 pt-6 border-t text-center text-gray-500 text-sm">
-        <p>© {new Date().getFullYear()} Sus! Anonymous Messaging. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
