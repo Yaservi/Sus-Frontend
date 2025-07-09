@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../context/AuthContext";
 import { WebSocketProvider } from "../context/WebSocketContext";
-import Navbar from "../components/Navbar";
+import ConditionalLayout from "../components/ConditionalLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,16 +35,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <WebSocketProvider>
-            <header>
-              <Navbar />
-            </header>
-            <main className="flex-grow">
+            <ConditionalLayout>
               {children}
-            </main>
-            <footer className="py-6 text-center text-gray-500 text-sm border-t">
-              <div className="container mx-auto px-4">
-              </div>
-            </footer>
+            </ConditionalLayout>
           </WebSocketProvider>
         </AuthProvider>
       </body>

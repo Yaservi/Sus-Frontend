@@ -10,6 +10,22 @@ import SendMessageForm from '../components/SendMessageForm';
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { unreadCount } = useWebSocket();
+  const searchParams = useSearchParams();
+  const username = searchParams.get('username');
+
+  // If username is provided in the URL, show only the message form with navbar color background
+  if (username) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-primary">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4 text-primary">Send Anonymous Message</h2>
+            <SendMessageForm recipientUsername={username} hideContainer={true} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">

@@ -17,13 +17,14 @@ type MessageFormData = z.infer<typeof messageSchema>;
 interface SendMessageFormProps {
   recipientUsername: string;
   onMessageSent?: () => void;
+  hideContainer?: boolean;
 }
 
-export default function SendMessageForm({ recipientUsername, onMessageSent }: SendMessageFormProps) {
+export default function SendMessageForm({ recipientUsername, onMessageSent, hideContainer = false }: SendMessageFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -37,16 +38,16 @@ export default function SendMessageForm({ recipientUsername, onMessageSent }: Se
     setLoading(true);
     setError(null);
     setSuccess(false);
-    
+
     try {
       const messageData: SendMessageRequest = {
         content: data.content,
       };
-      
+
       await sendMessage(recipientUsername, messageData);
       setSuccess(true);
       reset(); // Clear the form
-      
+
       if (onMessageSent) {
         onMessageSent();
       }
@@ -58,22 +59,20 @@ export default function SendMessageForm({ recipientUsername, onMessageSent }: Se
     }
   };
 
-  return (
-    <div className="w-full p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Send Anonymous Message</h2>
-      
+  const formContent = (
+    <>
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
           {error}
         </div>
       )}
-      
+
       {success && (
         <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
           Message sent successfully!
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit(processSubmit)} className="space-y-4">
         <div>
           <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
@@ -83,7 +82,7 @@ export default function SendMessageForm({ recipientUsername, onMessageSent }: Se
             id="content"
             rows={4}
             {...register('content')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Type your anonymous message here..."
             disabled={loading}
           />
@@ -91,15 +90,26 @@ export default function SendMessageForm({ recipientUsername, onMessageSent }: Se
             <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
           )}
         </div>
-        
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          className="w-full py-2 px-4 btn-primary hover:bg-primary-light text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
         >
           {loading ? 'Sending...' : 'Send Message'}
         </button>
       </form>
+    </>
+  );
+
+  if (hideContainer) {
+    return formContent;
+  }
+
+  return (
+    <div className="w-full p-4 bg-white rounded-lg shadow-md">
+      <h2 className="text-xl font-semibold mb-4">Send Anonymous Message</h2>
+      {formContent}
     </div>
   );
 }
